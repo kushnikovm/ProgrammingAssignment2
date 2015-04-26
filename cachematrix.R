@@ -1,15 +1,38 @@
-## Put comments here that give an overall description of what your
-## functions do
+## The main idea was taken from the example in description 
+## of ProgrammingAssignment2 (README.md)
 
-## Write a short comment describing this function
+
+## Function makeCacheMatrix() takes square matrix as input argument
 
 makeCacheMatrix <- function(x = matrix()) {
-
+    m <- NULL
+    set <- function(y) {
+        x <<- y
+        m <<- NULL
+    }
+    get <- function() x
+    setsolve <- function(solve) m <<- solve
+    getsolve <- function() m
+    list(set = set, get = get,
+         setsolve = setsolve,
+         getsolve = getsolve)
 }
 
 
-## Write a short comment describing this function
+## Function cacheSolve takes a special "matrix" returned by 
+## makeCacheMatrix as argument and returns a matrix that is the inverse of it
+## If inverse matrix is already exists it prints a message and 
+## returns a stored value. 
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        
+    m <- x$getsolve()
+    if(!is.null(m)) {
+        message("getting cached data")
+        return(m)
+    }
+    data <- x$get()
+    m <- solve(data, ...)
+    x$setsolve(m)
+    m
 }
